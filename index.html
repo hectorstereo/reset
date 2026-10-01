@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Reset</title>
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Reset">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main id="app">
+
+  <!-- 1 · Respira (automático, ~10 s) -->
+  <section class="screen center" id="breathe" aria-label="Respira">
+    <div class="orb-wrap"><div class="orb" id="orb"></div></div>
+    <p class="breathe-label">Respira.</p>
+  </section>
+
+  <!-- 2 · ¿Qué está pasando? (un toque) -->
+  <section class="screen" id="trigger">
+    <div class="text"><h1>¿Qué está pasando?</h1></div>
+    <div class="actions">
+      <button data-trigger="trabajo">Trabajo</button>
+      <button data-trigger="dinero">Dinero</button>
+      <button data-trigger="otra">Otra cosa</button>
+    </div>
+  </section>
+
+  <!-- 3 · Perspectiva + una pregunta (un toque) -->
+  <section class="screen" id="perspective">
+    <div class="text">
+      <h1 id="p-head"></h1>
+      <p class="sub" id="p-sub"></p>
+    </div>
+    <div class="question">
+      <p class="q" id="p-q"></p>
+      <div class="actions row">
+        <button data-answer="si">Sí</button>
+        <button data-answer="no">No</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4a · Actúa -->
+  <section class="screen" id="act">
+    <div class="text">
+      <h1>Actúa.</h1>
+      <p class="sub">Una cosa. ¿Cuál es la siguiente acción concreta?<br>Después sigues con tu día.</p>
+    </div>
+    <div class="actions"><button data-done>Terminar</button></div>
+  </section>
+
+  <!-- 4b · Suelta -->
+  <section class="screen" id="release">
+    <div class="text">
+      <h1>Suelta.</h1>
+      <p class="sub">No requiere tu atención ahora.</p>
+    </div>
+    <div class="actions"><button data-done>Volver a mi día</button></div>
+  </section>
+
+  <!-- Fin -->
+  <section class="screen center" id="rest">
+    <p class="faint">Listo.</p>
+  </section>
+
+</main>
+<script src="mensajes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
