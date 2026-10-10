@@ -18,7 +18,8 @@ reset/
 ├── index.html            pantallas
 ├── styles.css            diseño (claro/oscuro automático)
 ├── app.js                lógica
-├── mensajes.js           ← TEXTOS. El único archivo que necesitas editar.
+├── mensajes.js           ← frases de RESET (no cambia en v2)
+├── preguntas.js          v2: biblioteca y editor «Mis preguntas» (sin contenido personal)
 ├── sw.js                 hace que abra al instante y funcione sin internet
 ├── manifest.webmanifest  nombre e icono de la app
 └── *.png                 iconos
@@ -74,3 +75,12 @@ Funciona igual en cualquier hosting estático (Cloudflare Pages, Vercel, tu prop
 - **Vibración:** en iOS 18 o superior hay un toque háptico sutil al presionar botones. En versiones anteriores Safari no lo permite; todo lo demás funciona igual.
 - **Cambiar textos:** abre `mensajes.js` en cualquier editor de texto. Cada tarjeta es `["Frase principal", "Frase secundaria"]`. Respeta comillas y comas. Vuelve a publicar; el cambio aparece la segunda vez que abras la app.
 - **Probar en computadora:** en la carpeta, ejecuta `python3 -m http.server` y abre `http://localhost:8000`.
+
+---
+
+## RESET v2
+
+- **Pantalla principal:** «¿Qué está pasando?» (camino rápido, igual que antes) + «Respirar y enfocar» + «Mis preguntas».
+- **Respirar y enfocar:** respiración 4-2-4 → ámbito de la vida → preguntas → continuar a RESET o finalizar.
+- **Mis preguntas:** las preguntas y categorías se escriben y editan en el propio iPhone. Se guardan solo en el dispositivo (no están en este repositorio, no están cifradas y no se sincronizan). Hay exportar/importar respaldo en JSON.
+- **Actualizar:** sube los archivos nuevos y cambia `CACHE` en `sw.js` (y `ASSETS` si agregas archivos).

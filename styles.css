@@ -113,7 +113,7 @@ button {
 button:active { transform: scale(.98); background: var(--press); }
 .row button, #act button, #release button { text-align: center; }
 
-/* ---------- Respiración: un ciclo, inhala 4 s · exhala 6 s ---------- */
+/* ---------- Respiración 4-2-4 ---------- */
 .orb-wrap {
   width: min(58vw, 260px);
   aspect-ratio: 1;
@@ -128,12 +128,7 @@ button:active { transform: scale(.98); background: var(--press); }
   transform: scale(.34);
   opacity: .9;
 }
-.orb.run { animation: breathe 10s forwards; }
-@keyframes breathe {
-  0%   { transform: scale(.34); animation-timing-function: cubic-bezier(.45, 0, .4, 1); }
-  40%  { transform: scale(1);   animation-timing-function: cubic-bezier(.35, 0, .3, 1); }
-  100% { transform: scale(.34); }
-}
+/* La escala del círculo la controla app.js fase por fase (inhala 4 s · pausa 2 s · exhala 4 s) */
 .breathe-label {
   margin-top: 44px;
   font-size: 22px;
@@ -155,3 +150,113 @@ button:active { transform: scale(.98); background: var(--press); }
 @media (prefers-reduced-motion: reduce) {
   .screen, .screen.on { transition: opacity .2s ease; }
 }
+
+/* =====================================================================
+   RESET v2 · añadidos (lo anterior no se modificó salvo la respiración)
+   ===================================================================== */
+[hidden] { display: none !important; }
+
+input, textarea, select { -webkit-user-select: text; user-select: text; }
+
+/* ---------- Botones nuevos ---------- */
+button.focus { margin-top: 10px; border-color: var(--accent); }
+button.link {
+  border-color: transparent;
+  color: var(--muted);
+  min-height: 48px;
+  font-size: 17px;
+  text-align: center;
+}
+button.link.left { text-align: left; padding: 0; }
+button.small { min-height: 54px; font-size: 17px; text-align: center; color: var(--muted); }
+button.primary { background: var(--accent); border-color: transparent; color: #fff; text-align: center; }
+button.primary:active { background: var(--accent); filter: brightness(.92); }
+button.danger { color: #c0453a; }
+button.c { text-align: center; }
+button:disabled { opacity: .3; }
+button.sub { margin-left: 22px; min-height: 58px; font-size: 18px; line-height: normal; max-width: none; color: var(--muted); }
+
+/* ---------- Pantallas con lista desplazable ---------- */
+.screen.scroll {
+  grid-template-rows: auto 1fr auto;
+  padding-top: calc(env(safe-area-inset-top) + 9vh);
+  row-gap: 18px;
+  overflow: hidden;
+}
+.list {
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 2px 0 12px;
+}
+.list-inner { display: grid; gap: 12px; }
+.list .sub { margin-top: 0; }
+.note { font-size: 14px; line-height: 1.45; color: var(--muted); margin-top: 6px; }
+
+/* ---------- Respiración ---------- */
+#breathe { padding-top: calc(env(safe-area-inset-top) + 8vh); }
+.br-main { display: grid; place-items: center; align-content: center; text-align: center; }
+.br-main .breathe-label { margin-top: 34px; min-height: 1.3em; }
+.br-count { margin-top: 8px; min-height: 58px; font-size: 48px; font-weight: 300; font-variant-numeric: tabular-nums; }
+.br-sub { margin-top: 4px; min-height: 1.3em; font-size: 15px; color: var(--muted); }
+.br-skip {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 12px);
+  right: 14px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-color: transparent;
+  color: var(--muted);
+  font-size: 17px;
+}
+.br-actions .actions { text-align: center; }
+.br-actions button { text-align: center; }
+.br-end { display: none; }
+#breathe.done .br-run, #breathe.done .br-skip { display: none; }
+#breathe.done .br-end { display: grid; }
+
+/* ---------- Preguntas predefinidas ---------- */
+.qhead { display: flex; justify-content: space-between; gap: 16px; font-size: 15px; color: var(--muted); }
+.qbody { display: grid; align-content: center; min-height: 0; overflow-y: auto; }
+.qtext { font-size: clamp(26px, 7.4vw, 34px); font-weight: 600; letter-spacing: -0.018em; line-height: 1.22; }
+.qtext.in { animation: fadein .5s ease both; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Mis preguntas ---------- */
+button.cat { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+button.cat.sub { font-size: 18px; }
+button.cat .n { color: var(--muted); font-size: 16px; }
+.mphead { min-height: 44px; display: flex; align-items: center; }
+.fld { display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+.fld input, .fld select, .qrow textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 17px;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+}
+.qrow textarea { resize: none; line-height: 1.35; display: block; overflow: hidden; }
+.qrow { display: grid; gap: 8px; margin-bottom: 14px; }
+.qtools { display: flex; gap: 8px; }
+.qtools button { min-height: 44px; min-width: 52px; padding: 0 14px; font-size: 17px; text-align: center; border-radius: 12px; }
+.qtools .danger { margin-left: auto; font-size: 16px; }
+#mc-qs { display: block; }
+
+/* ---------- Diálogo ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px 20px calc(env(safe-area-inset-bottom) + 20px);
+  background: rgba(0, 0, 0, .45);
+}
+.sheet { width: 100%; background: var(--bg); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: grid; gap: 18px; }
+.sheet p { font-size: 19px; line-height: 1.4; }

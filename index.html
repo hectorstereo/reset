@@ -19,19 +19,36 @@
 <body>
 <main id="app">
 
-  <!-- 1 · Respira (automático, ~10 s) -->
-  <section class="screen center" id="breathe" aria-label="Respira">
-    <div class="orb-wrap"><div class="orb" id="orb"></div></div>
-    <p class="breathe-label">Respira.</p>
+  <!-- 1 · Respira · 4-2-4 (camino de enfoque) -->
+  <section class="screen" id="breathe" aria-label="Respiración">
+    <button class="br-skip" data-br="skip">Saltar</button>
+    <div class="br-main">
+      <div class="orb-wrap"><div class="orb" id="orb"></div></div>
+      <p class="breathe-label" id="br-label" aria-live="polite">Respira.</p>
+      <p class="br-count" id="br-count" aria-hidden="true"></p>
+      <p class="br-sub" id="br-sub"></p>
+    </div>
+    <div class="br-actions">
+      <div class="actions br-run">
+        <button data-br="hold" id="br-hold">Omitir pausa</button>
+        <button data-br="end">Terminar respiración</button>
+      </div>
+      <div class="actions br-end">
+        <button data-br="repeat">Repetir respiración</button>
+        <button data-br="continue">Continuar</button>
+      </div>
+    </div>
   </section>
 
-  <!-- 2 · ¿Qué está pasando? (un toque) -->
+  <!-- 2 · ¿Qué está pasando? (pantalla principal: RESET original en un toque) -->
   <section class="screen" id="trigger">
     <div class="text"><h1>¿Qué está pasando?</h1></div>
     <div class="actions">
       <button data-trigger="trabajo">Trabajo</button>
       <button data-trigger="dinero">Dinero</button>
       <button data-trigger="otra">Otra cosa</button>
+      <button class="focus" data-go="focus">Respirar y enfocar</button>
+      <button class="link" data-go="mp">Mis preguntas</button>
     </div>
   </section>
 
@@ -73,8 +90,80 @@
     <p class="faint">Listo.</p>
   </section>
 
+  <!-- Enfoque · Ámbito de la vida (solo categorías con preguntas) -->
+  <section class="screen scroll" id="dimension">
+    <div class="text"><h1>Ámbito de la vida</h1></div>
+    <div class="list" id="dim-list"></div>
+    <div class="actions"><button class="link" data-nav="exit">Salir</button></div>
+  </section>
+
+  <!-- Enfoque · Preguntas predefinidas (una a la vez, sin respuesta) -->
+  <section class="screen scroll" id="question">
+    <div class="qhead"><span id="q-cat"></span><span id="q-pos"></span></div>
+    <div class="qbody"><p class="qtext" id="q-text"></p></div>
+    <div class="actions">
+      <div id="q-mid" class="actions">
+        <div class="actions row">
+          <button data-q="prev">Atrás</button>
+          <button data-q="next">Siguiente</button>
+        </div>
+        <button class="link" data-nav="exit">Salir</button>
+      </div>
+      <div id="q-last" class="actions" hidden>
+        <button data-q="cont" class="c">Continuar a RESET</button>
+        <button data-q="fin" class="c">Finalizar</button>
+        <button class="link" data-q="prev">Atrás</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mis preguntas · categorías -->
+  <section class="screen scroll" id="mp">
+    <div class="text"><h1>Mis preguntas</h1></div>
+    <div class="list">
+      <div id="mp-list" class="list-inner"></div>
+      <button class="small" data-mp="newcat">+ Nueva categoría</button>
+      <div class="actions row">
+        <button class="small" data-mp="export">Exportar respaldo</button>
+        <button class="small" data-mp="import">Importar respaldo</button>
+      </div>
+      <p class="note">Solo aparecen en RESET las categorías con preguntas. Se guardan únicamente en este dispositivo, sin cifrar ni sincronizar: si borras los datos de la app o cambias de teléfono se pierden. Exporta un respaldo si quieres conservarlas.</p>
+    </div>
+    <div class="actions"><button class="link" data-nav="exit">Volver</button></div>
+  </section>
+
+  <!-- Mis preguntas · editar una categoría -->
+  <section class="screen scroll" id="mpcat">
+    <div class="mphead"><button class="link left" data-mp="back">‹ Mis preguntas</button></div>
+    <div class="list">
+      <label class="fld"><span>Nombre</span>
+        <input id="mc-name" type="text" maxlength="80" autocapitalize="off" autocorrect="off" spellcheck="false">
+      </label>
+      <label class="fld" id="mc-parent-wrap"><span>Subcategoría de</span>
+        <select id="mc-parent"></select>
+      </label>
+      <div id="mc-qs"></div>
+      <button class="small" data-mp="addq">+ Agregar pregunta</button>
+      <button class="link danger" id="mc-del" data-mp="delcat">Eliminar categoría</button>
+    </div>
+    <div class="actions"><button class="primary" id="mc-save" data-mp="save">Guardar</button></div>
+  </section>
+
+  <input type="file" id="imp-file" accept=".json,application/json,text/plain" hidden>
+
+  <div class="modal" id="modal" hidden>
+    <div class="sheet">
+      <p id="modal-msg"></p>
+      <div class="actions row">
+        <button id="modal-no">Cancelar</button>
+        <button id="modal-ok" class="primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
 </main>
 <script src="mensajes.js"></script>
+<script src="preguntas.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
